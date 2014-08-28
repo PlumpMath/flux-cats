@@ -22,7 +22,7 @@ var ManageRouter = React.createClass({
   render: function() {
     return (
       <Locations>
-        <Location path="/courses" handler={ManageCourses} />
+        <Location path="/" handler={ManageCourses} />
         <Location path="/course/:course" handler={ManageCourses} />
       </Locations>
     );
@@ -33,7 +33,7 @@ var ContentRouter = React.createClass({
   render: function() {
     return (
       <Locations>
-        <Location path="/courses" handler={Courses} />
+        <Location path="/" handler={Courses} />
         <Location path="/course/:course" handler={Course} />
       </Locations>
     );
