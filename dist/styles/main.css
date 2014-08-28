@@ -424,9 +424,49 @@ th {
   padding: 0;
 }
 
+.wrapper {
+  padding: 40px 10px 10px 10px;
+  background: #fefdf9;
+}
+
 header {
   width: 100%;
   height: 40px;
-  background: black;
-  color: white;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid rgba(50,50,50,0.1);
+  background: white;
+}
+
+header .links {
+  float: right;
+  margin-right: 10px;
+}
+
+header .link {
+  float: left;
+  margin-right: 15px;
+  font-decoration: none;
+  line-height: 40px;
+  color: #3a968a;
+  cursor: pointer;
+}
+
+.avatar {
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: #ccc;
+  margin: 5px 20px 0 0;
+  cursor: pointer;
+}
+
+.logo {
+  height: 24px;
+  width: 112px;
+  background-size: 112px 24px;
+  margin: 8px 0 0 20px;
+  background-image: url('/assets/logo.svg');
+  background-repeat: no-repeat;
+  display: inline-block;
 }

@@ -20867,18 +20867,27 @@ module.exports = Courses;
 },{"../../mixins/store-watch":185,"../../stores/course-store":186,"./course":177,"react":174}],179:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
+var Link = require('react-router-component').Link;
 
 var Header = React.createClass({displayName: 'Header',
   render: function() {
     return (
-      React.DOM.header(null, "I am a header")
+      React.DOM.header(null, 
+        Link({className: "logo", href: "/"}), 
+        React.DOM.div({className: "avatar"}), 
+        React.DOM.div({className: "links"}, 
+          React.DOM.a({className: "link"}, "Create"), 
+          React.DOM.a({className: "link"}, "Develop"), 
+          React.DOM.a({className: "link"}, "Learn")
+        )
+      )
     );
   }
 });
 
 module.exports = Header;
 
-},{"react":174}],180:[function(require,module,exports){
+},{"react":174,"react-router-component":15}],180:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 
