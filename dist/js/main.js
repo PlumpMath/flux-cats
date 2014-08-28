@@ -20823,6 +20823,7 @@ var Course = React.createClass({displayName: 'Course',
     return (
       React.DOM.div({className: "course-container"}, 
         React.DOM.p(null, this.props.course.title), 
+        React.DOM.p(null, this.props.course.summary), 
         Link({href: "/course/" + this.props.course.id}, 
           "Learn more"
         )

@@ -7,6 +7,7 @@ var Course = React.createClass({
     return (
       <div className="course-container">
         <p>{this.props.course.title}</p>
+        <p>{this.props.course.summary}</p>
         <Link href={"/course/" + this.props.course.id}>
           Learn more
         </Link>
