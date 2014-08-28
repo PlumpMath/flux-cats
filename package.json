@@ -1,0 +1,22 @@
+{
+  "name": "cgm_prototype",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Jones",
+  "license": "MIT",
+  "dependencies": {
+    "es6-promise": "^1.0.0",
+    "react-async": "^1.0.1",
+    "gulp-concat": "^2.3.4",
+    "react-router-component": "^0.20.0",
+    "gulp": "^3.8.7",
+    "reactify": "^0.14.0",
+    "gulp-browserify": "^0.5.0",
+    "react": "^0.11.1",
+    "js-api": "git+ssh://git@github.com:Versal/js-api.git#v0.5.29"
+  }
+}
