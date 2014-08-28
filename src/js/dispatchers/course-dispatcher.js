@@ -11,3 +11,5 @@ var CourseDispatcher = merge(Dispatcher.prototype, {
     });
   }
 });
+
+module.exports = CourseDispatcher;
