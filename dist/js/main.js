@@ -20744,7 +20744,7 @@ var ManageRouter = React.createClass({displayName: 'ManageRouter',
   render: function() {
     return (
       Locations(null, 
-        Location({path: "/courses", handler: ManageCourses}), 
+        Location({path: "/", handler: ManageCourses}), 
         Location({path: "/course/:course", handler: ManageCourses})
       )
     );
@@ -20755,7 +20755,7 @@ var ContentRouter = React.createClass({displayName: 'ContentRouter',
   render: function() {
     return (
       Locations(null, 
-        Location({path: "/courses", handler: Courses}), 
+        Location({path: "/", handler: Courses}), 
         Location({path: "/course/:course", handler: Course})
       )
     );
@@ -20884,7 +20884,7 @@ var React = require('react');
 var Manage = React.createClass({displayName: 'Manage',
   render: function() {
     return (
-      React.DOM.h1(null, "Manage courses view")
+      React.DOM.h1(null, "Manage course view")
     );
   }
 });
