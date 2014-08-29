@@ -39,7 +39,7 @@ var PreviousCourse = React.createClass({
             contentEditable="true"
             onBlur={this.handleEdit}
             onClick={this.handleClick}
-            className='edtitable'>
+            className='editable'>
             {this.state.course.title}
           </p>
         </Link>

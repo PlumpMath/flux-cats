@@ -21035,7 +21035,7 @@ var PreviousCourse = React.createClass({displayName: 'PreviousCourse',
             contentEditable: "true", 
             onBlur: this.handleEdit, 
             onClick: this.handleClick, 
-            className: "edtitable"}, 
+            className: "editable"}, 
             this.state.course.title
           )
         )
