@@ -1,0 +1,35 @@
+.manage.sidebar {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 700px;
+}
+
+.course-btn {
+  width: 170px;
+  height: 30px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.5s;
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+.course-btn:hover {
+  border: 1px solid #555;
+  transition: border-color 0.5s;
+}
+
+.course-btn p {
+  margin: 0;
+  line-height: 30px;
+  text-decoration: none;
+  display: inline-block;
+}
+.course-btn .editable {
+  cursor: text;
+}

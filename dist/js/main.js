@@ -20720,11 +20720,35 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":56}],175:[function(require,module,exports){
+var CourseConstants = require('../constants/course-constants');
+var CourseDispatcher = require('../dispatchers/course-dispatcher');
+
+var CourseActions = {
+  addCourseToHistory: function(id) {
+    CourseDispatcher.handleViewAction({
+      actionType: CourseConstants.COURSE_ADD_TO_HISTORY,
+      id: id
+    });
+  },
+
+  updateCourseTitle: function(title, id) {
+    console.log(title, id);
+    CourseDispatcher.handleViewAction({
+      actionType: CourseConstants.COURSE_UPDATE_TITLE,
+      title: title,
+      id: id
+    });
+  }
+};
+
+module.exports = CourseActions;
+
+},{"../constants/course-constants":183,"../dispatchers/course-dispatcher":184}],176:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var Header = require('./header/header');
 var Courses = require('./courses/courses');
-var Course = require('./course/course-overview');
+var CourseOverview = require('./course/course-overview');
 var ManageCourses = require('./manage/manage-courses');
 var Router = require('react-router-component');
 var Locations = Router.Locations;
@@ -20745,7 +20769,7 @@ var ManageRouter = React.createClass({displayName: 'ManageRouter',
     return (
       Locations(null, 
         Location({path: "/", handler: ManageCourses}), 
-        Location({path: "/course/:course", handler: ManageCourses})
+        Location({path: "/course/:id", handler: ManageCourses})
       )
     );
   }
@@ -20756,7 +20780,7 @@ var ContentRouter = React.createClass({displayName: 'ContentRouter',
     return (
       Locations(null, 
         Location({path: "/", handler: Courses}), 
-        Location({path: "/course/:course", handler: Course})
+        Location({path: "/course/:id", handler: CourseOverview})
       )
     );
   }
@@ -20767,11 +20791,13 @@ var App = React.createClass({displayName: 'App',
     return (
       React.DOM.div({className: "wrapper"}, 
         Header(null), 
-        React.DOM.div({className: "manage sidebar"}, 
-          ManageRouter(null)
-        ), 
-        React.DOM.div({className: "content container"}, 
-          ContentRouter(null)
+        React.DOM.div({className: "page-container"}, 
+          React.DOM.div({className: "manage sidebar"}, 
+            ManageRouter(null)
+          ), 
+          React.DOM.div({className: "content container"}, 
+            ContentRouter(null)
+          )
         )
       )
     );
@@ -20780,31 +20806,59 @@ var App = React.createClass({displayName: 'App',
 
 module.exports = App;
 
-},{"./course/course-overview":176,"./courses/courses":178,"./header/header":179,"./manage/manage-courses":180,"react":174,"react-router-component":15}],176:[function(require,module,exports){
+},{"./course/course-overview":177,"./courses/courses":179,"./header/header":180,"./manage/manage-courses":181,"react":174,"react-router-component":15}],177:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var CourseStore = require('../../stores/course-store');
+var CourseActions = require('../../actions/course-actions');
 var StoreWatchMixin = require('../../mixins/store-watch');
 
-function getCourse(component) {
-  var thisCourse;
+function getCourse(component, id) {
+  // id is passed in if the component calls this to manually update state
+  var course = (id) ?
+    CourseStore.getCourse(id) :
+    CourseStore.getCourse(component.props.id);
 
-  CourseStore.getCourses().forEach(function(course) {
-    if (course.id.toString() === component.props.course) {
-      thisCourse = course;
-    }
-  });
-
-  return { course: thisCourse };
+  return { course: course };
 }
 
 var CourseOverview = React.createClass({displayName: 'CourseOverview',
   mixins: [StoreWatchMixin(getCourse, CourseStore)],
 
+  componentWillMount: function() {
+    CourseActions.addCourseToHistory(this.state.course.id);
+  },
+
+  /**
+   * This manually updates the state if new course is received
+   * from the router.
+   * @param {object} nextProps The new course to be rendered
+   */
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.id !== this.props.id) {
+      this.setState(getCourse(null, nextProps.id));
+    }
+  },
+
+  handleEdit: function(e) {
+    var newTitle = this.refs.title.getDOMNode().innerHTML;
+
+    CourseActions.updateCourseTitle(newTitle, this.state.course.id);
+  },
+
   render: function() {
     return (
       React.DOM.div({className: "course-overview"}, 
-        React.DOM.h2(null, this.state.course.title), 
+        React.DOM.div(null, 
+          React.DOM.h2({
+            className: "editable", 
+            contentEditable: "true", 
+            ref: "title", 
+            onBlur: this.handleEdit}, 
+            this.state.course.title
+          )
+        ), 
+        React.DOM.img({className: "cover", src: this.state.course.cover}), 
         React.DOM.p(null, this.state.course.description)
       )
     );
@@ -20813,7 +20867,7 @@ var CourseOverview = React.createClass({displayName: 'CourseOverview',
 
 module.exports = CourseOverview;
 
-},{"../../mixins/store-watch":185,"../../stores/course-store":186,"react":174}],177:[function(require,module,exports){
+},{"../../actions/course-actions":175,"../../mixins/store-watch":187,"../../stores/course-store":188,"react":174}],178:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var Link = require('react-router-component').Link;
@@ -20824,6 +20878,7 @@ var Course = React.createClass({displayName: 'Course',
       React.DOM.div({className: "course-container"}, 
         React.DOM.p(null, this.props.course.title), 
         React.DOM.p(null, this.props.course.summary), 
+        React.DOM.img({className: "thumbnail", src: this.props.course.thumbnail}), 
         Link({href: "/course/" + this.props.course.id}, 
           "Learn more"
         )
@@ -20834,7 +20889,7 @@ var Course = React.createClass({displayName: 'Course',
 
 module.exports = Course;
 
-},{"react":174,"react-router-component":15}],178:[function(require,module,exports){
+},{"react":174,"react-router-component":15}],179:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var CourseStore = require('../../stores/course-store');
@@ -20864,7 +20919,7 @@ var Courses = React.createClass({displayName: 'Courses',
 
 module.exports = Courses;
 
-},{"../../mixins/store-watch":185,"../../stores/course-store":186,"./course":177,"react":174}],179:[function(require,module,exports){
+},{"../../mixins/store-watch":187,"../../stores/course-store":188,"./course":178,"react":174}],180:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var Link = require('react-router-component').Link;
@@ -20887,21 +20942,96 @@ var Header = React.createClass({displayName: 'Header',
 
 module.exports = Header;
 
-},{"react":174,"react-router-component":15}],180:[function(require,module,exports){
+},{"react":174,"react-router-component":15}],181:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
+var CourseActions = require('../../actions/course-actions');
+var CourseStore = require('../../stores/course-store');
+var StoreWatchMixin = require('../../mixins/store-watch');
+var PreviousCourse = require('./previous-course');
+var Link = require('react-router-component').Link;
+
+function courseHistory() {
+  return { courseHistory: CourseStore.getCourseHistory() };
+}
 
 var Manage = React.createClass({displayName: 'Manage',
+  mixins: [StoreWatchMixin(courseHistory, CourseStore)],
+
   render: function() {
+    var courseHistory = this.state.courseHistory.map(function(course) {
+      return (
+        PreviousCourse({course: course})
+      );
+    });
+
     return (
-      React.DOM.h1(null, "Manage course view")
+      React.DOM.div({className: "course-history-container"}, 
+        React.DOM.div({className: "course course-history"}, 
+          Link({className: "course-btn", href: "/"}, 
+            React.DOM.p(null, "All")
+          )
+        ), 
+        courseHistory
+      )
     );
   }
 });
 
 module.exports = Manage;
 
-},{"react":174}],181:[function(require,module,exports){
+},{"../../actions/course-actions":175,"../../mixins/store-watch":187,"../../stores/course-store":188,"./previous-course":182,"react":174,"react-router-component":15}],182:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var CourseStore = require('../../stores/course-store');
+var CourseActions = require('../../actions/course-actions');
+var StoreWatchMixin = require('../../mixins/store-watch');
+var Link = require('react-router-component').Link;
+
+var CourseOverview = require('../course/course-overview');
+
+function course(component) {
+  var id = component.props.course.id;
+
+  return { course: CourseStore.getCourse(id) };
+}
+
+var PreviousCourse = React.createClass({displayName: 'PreviousCourse',
+  mixins: [StoreWatchMixin(course, CourseStore)],
+
+  handleEdit: function(e) {
+    var id = this.state.course.id;
+    var newTitle = this.refs.title.getDOMNode().innerHTML;
+
+    CourseActions.updateCourseTitle(newTitle, id);
+  },
+
+  // stop navigation if somebody clicks editable text
+  handleClick: function(e) {
+    return false;
+  },
+
+  render: function() {
+    return (
+      React.DOM.div({className: "course course-history"}, 
+        Link({className: "course-btn", href: "/course/" + this.state.course.id}, 
+          React.DOM.p({
+            ref: "title", 
+            contentEditable: "true", 
+            onBlur: this.handleEdit, 
+            onClick: this.handleClick, 
+            className: "editable"}, 
+            this.state.course.title
+          )
+        )
+      )
+    );
+  }
+});
+
+module.exports = PreviousCourse;
+
+},{"../../actions/course-actions":175,"../../mixins/store-watch":187,"../../stores/course-store":188,"../course/course-overview":177,"react":174,"react-router-component":15}],183:[function(require,module,exports){
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
@@ -20909,7 +21039,7 @@ module.exports = keyMirror({
   COURSE_ADD_TO_HISTORY: null
 });
 
-},{"react/lib/keyMirror":156}],182:[function(require,module,exports){
+},{"react/lib/keyMirror":156}],184:[function(require,module,exports){
 var Dispatcher = require('./dispatcher');
 var merge = require('react/lib/merge');
 
@@ -20926,7 +21056,7 @@ var CourseDispatcher = merge(Dispatcher.prototype, {
 
 module.exports = CourseDispatcher;
 
-},{"./dispatcher":183,"react/lib/merge":160}],183:[function(require,module,exports){
+},{"./dispatcher":185,"react/lib/merge":160}],185:[function(require,module,exports){
 var Promise = require('es6-promise').Promise;
 var merge = require('react/lib/merge');
 
@@ -20983,7 +21113,7 @@ Dispatcher.prototype = merge(Dispatcher.prototype, {
 
 module.exports = Dispatcher;
 
-},{"es6-promise":1,"react/lib/merge":160}],184:[function(require,module,exports){
+},{"es6-promise":1,"react/lib/merge":160}],186:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var App = require('./components/app');
@@ -20994,7 +21124,7 @@ var App = require('./components/app');
 
 React.renderComponent(App(null), document.querySelector('#app'));
 
-},{"./components/app":175,"react":174}],185:[function(require,module,exports){
+},{"./components/app":176,"react":174}],187:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 
@@ -21020,7 +21150,7 @@ var StoreWatchMixin = function(cb, store) {
 
 module.exports = StoreWatchMixin;
 
-},{"react":174}],186:[function(require,module,exports){
+},{"react":174}],188:[function(require,module,exports){
 var CourseDispatcher = require('../dispatchers/course-dispatcher');
 var CourseConstants = require('../constants/course-constants');
 var merge = require('react/lib/merge');
@@ -21037,12 +21167,12 @@ var _courses = [];
 
 for (var i = 1; i < 10; i++) {
   _courses.push({
-    id: 'Class' + i,
-    title: 'Class #' + i,
+    id: 'course' + i,
+    title: 'Course #' + i,
     summary: 'This is a cool course!',
     description: 'Longer course description',
-    thumbnail: 'assets/course-thumbnail.png',
-    cover: 'assets/course-cover.png'
+    thumbnail: '/assets/course-thumbnail.jpeg',
+    cover: '/assets/course-cover.jpeg'
   });
 }
 
@@ -21051,20 +21181,37 @@ for (var i = 1; i < 10; i++) {
  */
 var _courseHistory = [];
 
+function _getCourse(id) {
+  for (var i = 0; i < _courses.length; i++) {
+    if (_courses[i].id === id) {
+      return _courses[i];
+    }
+  }
+}
+
 /**
  * Adds a course to history if it doesn't already exist there
  * @param {Number} index Index of the course in question in _courses
  */
-function _addCourseToHistory(index) {
-  var course = _courses[index];
+function _addCourseToHistory(id) {
+  var course = _getCourse(id);
 
-  _courseHistory.forEach(function(c) {
-    if (c.id === course.id) {
+  for (var i = 0; i < _courseHistory.length; i++) {
+    if (_courseHistory[i].id === course.id) {
       return;
     }
-  });
+  }
 
-  _previousCourses.push(course);
+  _courseHistory.push(course);
+}
+
+/**
+ * Update a course's title
+ * @param {string} title New title of course
+ * @param {number} index Index of course in _courses
+ */
+function _updateCourseTitle(title, id) {
+  _getCourse(id).title = title;
 }
 
 var CourseStore = merge(EventEmitter.prototype, {
@@ -21080,6 +21227,10 @@ var CourseStore = merge(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
+  getCourse: function(id) {
+    return _getCourse(id);
+  },
+
   getCourses: function() {
     return _courses;
   },
@@ -21093,7 +21244,11 @@ var CourseStore = merge(EventEmitter.prototype, {
 
     switch (action.actionType) {
       case CourseConstants.COURSE_ADD_TO_HISTORY:
-        _addCourseToHistory(action.index);
+        _addCourseToHistory(action.id);
+        break;
+
+      case CourseConstants.COURSE_UPDATE_TITLE:
+        _updateCourseTitle(action.title, action.id);
         break;
     }
 
@@ -21105,4 +21260,4 @@ var CourseStore = merge(EventEmitter.prototype, {
 
 module.exports = CourseStore;
 
-},{"../constants/course-constants":181,"../dispatchers/course-dispatcher":182,"events":11,"react/lib/merge":160}]},{},[184])
+},{"../constants/course-constants":183,"../dispatchers/course-dispatcher":184,"events":11,"react/lib/merge":160}]},{},[186])

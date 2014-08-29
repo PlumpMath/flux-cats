@@ -1,4 +1,15 @@
 .wrapper {
-  padding: 40px 10px 10px 10px;
   background: #fefdf9;
+  padding-top: 30px;
+}
+
+.page-container {
+  padding: 10px;
+  max-width: 1050px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.editable {
+  border: 1px dashed #ccc;
 }

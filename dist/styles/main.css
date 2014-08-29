@@ -424,9 +424,38 @@ th {
   padding: 0;
 }
 
+.content.container {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  right: 0;
+  left: 350px;
+}
+
+.course-overview h2 {
+  display: inline-block;
+}
+
+.course-container {
+  float: left;
+  width: 200px;
+  height: 200px;
+}
+
 .wrapper {
-  padding: 40px 10px 10px 10px;
   background: #fefdf9;
+  padding-top: 30px;
+}
+
+.page-container {
+  padding: 10px;
+  max-width: 1050px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.editable {
+  border: 1px dashed #ccc;
 }
 
 header {
@@ -436,6 +465,7 @@ header {
   top: 0;
   border-bottom: 1px solid rgba(50,50,50,0.1);
   background: white;
+  z-index: 500;
 }
 
 header .links {
@@ -469,4 +499,40 @@ header .link {
   background-image: url('/assets/logo.svg');
   background-repeat: no-repeat;
   display: inline-block;
+}
+
+.manage.sidebar {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 700px;
+}
+
+.course-btn {
+  width: 170px;
+  height: 30px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.5s;
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+.course-btn:hover {
+  border: 1px solid #555;
+  transition: border-color 0.5s;
+}
+
+.course-btn p {
+  margin: 0;
+  line-height: 30px;
+  text-decoration: none;
+  display: inline-block;
+}
+.course-btn .editable {
+  cursor: text;
 }

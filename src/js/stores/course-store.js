@@ -14,12 +14,12 @@ var _courses = [];
 
 for (var i = 1; i < 10; i++) {
   _courses.push({
-    id: 'Class' + i,
-    title: 'Class #' + i,
+    id: 'course' + i,
+    title: 'Course #' + i,
     summary: 'This is a cool course!',
     description: 'Longer course description',
-    thumbnail: 'assets/course-thumbnail.png',
-    cover: 'assets/course-cover.png'
+    thumbnail: '/assets/course-thumbnail.jpeg',
+    cover: '/assets/course-cover.jpeg'
   });
 }
 
@@ -28,20 +28,37 @@ for (var i = 1; i < 10; i++) {
  */
 var _courseHistory = [];
 
+function _getCourse(id) {
+  for (var i = 0; i < _courses.length; i++) {
+    if (_courses[i].id === id) {
+      return _courses[i];
+    }
+  }
+}
+
 /**
  * Adds a course to history if it doesn't already exist there
  * @param {Number} index Index of the course in question in _courses
  */
-function _addCourseToHistory(index) {
-  var course = _courses[index];
+function _addCourseToHistory(id) {
+  var course = _getCourse(id);
 
-  _courseHistory.forEach(function(c) {
-    if (c.id === course.id) {
+  for (var i = 0; i < _courseHistory.length; i++) {
+    if (_courseHistory[i].id === course.id) {
       return;
     }
-  });
+  }
 
-  _previousCourses.push(course);
+  _courseHistory.push(course);
+}
+
+/**
+ * Update a course's title
+ * @param {string} title New title of course
+ * @param {number} index Index of course in _courses
+ */
+function _updateCourseTitle(title, id) {
+  _getCourse(id).title = title;
 }
 
 var CourseStore = merge(EventEmitter.prototype, {
@@ -57,6 +74,10 @@ var CourseStore = merge(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
+  getCourse: function(id) {
+    return _getCourse(id);
+  },
+
   getCourses: function() {
     return _courses;
   },
@@ -70,7 +91,11 @@ var CourseStore = merge(EventEmitter.prototype, {
 
     switch (action.actionType) {
       case CourseConstants.COURSE_ADD_TO_HISTORY:
-        _addCourseToHistory(action.index);
+        _addCourseToHistory(action.id);
+        break;
+
+      case CourseConstants.COURSE_UPDATE_TITLE:
+        _updateCourseTitle(action.title, action.id);
         break;
     }
 

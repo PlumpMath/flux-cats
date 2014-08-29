@@ -2,7 +2,7 @@
 var React = require('react');
 var Header = require('./header/header');
 var Courses = require('./courses/courses');
-var Course = require('./course/course-overview');
+var CourseOverview = require('./course/course-overview');
 var ManageCourses = require('./manage/manage-courses');
 var Router = require('react-router-component');
 var Locations = Router.Locations;
@@ -23,7 +23,7 @@ var ManageRouter = React.createClass({
     return (
       <Locations>
         <Location path="/" handler={ManageCourses} />
-        <Location path="/course/:course" handler={ManageCourses} />
+        <Location path="/course/:id" handler={ManageCourses} />
       </Locations>
     );
   }
@@ -34,7 +34,7 @@ var ContentRouter = React.createClass({
     return (
       <Locations>
         <Location path="/" handler={Courses} />
-        <Location path="/course/:course" handler={Course} />
+        <Location path="/course/:id" handler={CourseOverview} />
       </Locations>
     );
   }
@@ -45,11 +45,13 @@ var App = React.createClass({
     return (
       <div className="wrapper">
         <Header />
-        <div className="manage sidebar">
-          <ManageRouter />
-        </div>
-        <div className="content container">
-          <ContentRouter />
+        <div className="page-container">
+          <div className="manage sidebar">
+            <ManageRouter />
+          </div>
+          <div className="content container">
+            <ContentRouter />
+          </div>
         </div>
       </div>
     );
