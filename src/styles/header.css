@@ -34,9 +34,7 @@ header .link {
 .logo {
   height: 24px;
   width: 112px;
-  background-size: 112px 24px;
+  background: #ccc;
   margin: 8px 0 0 20px;
-  background-image: url('/assets/logo.svg');
-  background-repeat: no-repeat;
   display: inline-block;
 }

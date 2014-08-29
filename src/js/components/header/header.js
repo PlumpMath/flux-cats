@@ -9,9 +9,9 @@ var Header = React.createClass({
         <Link className="logo" href="/"></Link>
         <div className="avatar"></div>
         <div className="links">
-          <a className="link">Create</a>
-          <a className="link">Develop</a>
-          <a className="link">Learn</a>
+          <a className="link">action</a>
+          <a className="link">action</a>
+          <a className="link">action</a>
         </div>
       </header>
     );

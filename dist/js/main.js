@@ -22677,9 +22677,9 @@ var Header = React.createClass({displayName: 'Header',
         Link({className: "logo", href: "/"}), 
         React.DOM.div({className: "avatar"}), 
         React.DOM.div({className: "links"}, 
-          React.DOM.a({className: "link"}, "Create"), 
-          React.DOM.a({className: "link"}, "Develop"), 
-          React.DOM.a({className: "link"}, "Learn")
+          React.DOM.a({className: "link"}, "action"), 
+          React.DOM.a({className: "link"}, "action"), 
+          React.DOM.a({className: "link"}, "action")
         )
       )
     );
