@@ -12,4 +12,14 @@
 
 .editable {
   border: 1px dashed #ccc;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: #3a968a;
+}
+
+a:hover {
+  text-decoration: underline;
 }

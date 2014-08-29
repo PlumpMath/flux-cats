@@ -1,10 +1,12 @@
 /** @jsx React.DOM */
-var React = require('react');
+var React = require('react/addons');
 var CourseActions = require('../../actions/course-actions');
 var CourseStore = require('../../stores/course-store');
 var StoreWatchMixin = require('../../mixins/store-watch');
 var PreviousCourse = require('./previous-course');
 var Link = require('react-router-component').Link;
+
+var CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 function courseHistory() {
   return { courseHistory: CourseStore.getCourseHistory() };
@@ -35,7 +37,9 @@ var Manage = React.createClass({
             <p>All</p>
           </Link>
         </div>
-        {courseHistory}
+        <CSSTransitionGroup transitionName="fade">
+          {courseHistory}
+        </CSSTransitionGroup>
       </div>
     );
   }

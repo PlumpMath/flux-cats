@@ -12,14 +12,14 @@ var CHANGE_EVENT = 'course-change';
  */
 var _courses = [];
 
-for (var i = 1; i < 10; i++) {
+for (var i = 1; i < 7; i++) {
   _courses.push({
     id: 'course' + i,
     title: 'Course #' + i,
     summary: 'This is a cool course!',
     description: 'Longer course description',
-    thumbnail: '/assets/course-thumbnail.jpeg',
-    cover: '/assets/course-cover.jpeg'
+    thumbnail: '/assets/course-thumbnail' + i + '.jpg',
+    cover: '/assets/course-cover' + i + '.jpg'
   });
 }
 

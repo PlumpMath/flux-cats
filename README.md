@@ -1,4 +1,4 @@
-CGM Prototype
+Flux cat (an example of flux + react)
 =============
 
 ## Build ##

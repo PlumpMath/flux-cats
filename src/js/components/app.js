@@ -4,6 +4,7 @@ var Header = require('./header/header');
 var Courses = require('./courses/courses');
 var CourseOverview = require('./course/course-overview');
 var ManageCourses = require('./manage/manage-courses');
+var AnimatedLocations = require('./util/animated-transition');
 var Router = require('react-router-component');
 var Locations = Router.Locations;
 var Location = Router.Location;
@@ -33,10 +34,10 @@ var ManageRouter = React.createClass({
 var ContentRouter = React.createClass({
   render: function() {
     return (
-      <Locations>
+      <AnimatedLocations transitionName="page-fade">
         <Location path="/" handler={Courses} />
         <Location path="/course/:id" handler={CourseOverview} />
-      </Locations>
+      </AnimatedLocations>
     );
   }
 });

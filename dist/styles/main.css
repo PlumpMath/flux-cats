@@ -424,6 +424,39 @@ th {
   padding: 0;
 }
 
+.fade-enter {
+  opacity: 0.01;
+  transition: all 0.3s ease-out;
+  position: relative;
+  top: 40px;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  top: 0;
+}
+
+.page-fade-enter {
+  opacity: 0.01;
+  transition: opacity 0.5s;
+  position: absolute;
+  z-index: 1000;
+}
+
+.page-fade-enter.page-fade-enter-active {
+  opacity: 1;
+}
+
+.page-fade-leave {
+  opacity: 1;
+  transition: opacity 0.2s;
+  position: absolute;
+}
+
+.page-fade-leave.page-fade-leave-active {
+  opacity: 0.01;
+}
+
 .content.container {
   position: absolute;
   top: 40px;
@@ -437,9 +470,29 @@ th {
 }
 
 .course-container {
-  float: left;
+  display: inline-block;
   width: 200px;
-  height: 200px;
+  height: auto;
+  background-color: #fefdf9;
+  margin: 0 10px 10px 0;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.course-container .title {
+  font-weight: bold;
+}
+
+.course-container .summary {
+  color: #999;
+  margin: 0;
+}
+
+.course-container figure {
+  display: inline-block;
+  padding: 5px 5px 1px 5px;
+  border: 1px solid #ccc;
+  background: white;
 }
 
 .wrapper {
@@ -456,6 +509,16 @@ th {
 
 .editable {
   border: 1px dashed #ccc;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: #3a968a;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 header {

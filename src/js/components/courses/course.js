@@ -6,9 +6,11 @@ var Course = React.createClass({
   render: function() {
     return (
       <div className="course-container">
-        <p>{this.props.course.title}</p>
-        <p>{this.props.course.summary}</p>
-        <img className="thumbnail" src={this.props.course.thumbnail} />
+        <p className="title">{this.props.course.title}</p>
+        <p className="summary">{this.props.course.summary}</p>
+        <figure>
+          <img className="thumbnail" src={this.props.course.thumbnail} />
+        </figure>
         <Link href={"/course/" + this.props.course.id}>
           Learn more
         </Link>
