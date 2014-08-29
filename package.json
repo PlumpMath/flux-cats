@@ -10,14 +10,14 @@
   "license": "MIT",
   "dependencies": {
     "es6-promise": "^1.0.0",
-    "react-async": "^1.0.1",
-    "gulp-concat": "^2.3.4",
-    "react-router-component": "^0.20.0",
+    "express": "^4.8.6",
     "gulp": "^3.8.7",
-    "reactify": "^0.14.0",
     "gulp-browserify": "^0.5.0",
+    "gulp-concat": "^2.3.4",
+    "gulp-order": "^1.1.1",
     "react": "^0.11.1",
-    "js-api": "git+ssh://git@github.com:Versal/js-api.git#v0.5.29",
-    "gulp-order": "^1.1.1"
+    "react-async": "^1.0.1",
+    "react-router-component": "^0.20.0",
+    "reactify": "^0.14.0"
   }
 }
