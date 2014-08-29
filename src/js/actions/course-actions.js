@@ -10,7 +10,6 @@ var CourseActions = {
   },
 
   updateCourseTitle: function(title, id) {
-    console.log(title, id);
     CourseDispatcher.handleViewAction({
       actionType: CourseConstants.COURSE_UPDATE_TITLE,
       title: title,

@@ -12,6 +12,7 @@ var Location = Router.Location;
  * This file handles constructing the overall layout of the app
  * and hooking up routers. This app has two routers:
  * 1. controlling the active view of the manage sidebar
+ * 		- note that currently manage sidebar only have one view to worry about
  * 2. controlling the active view of the content area
  *
  * As the number of URLs grow this component would likely get

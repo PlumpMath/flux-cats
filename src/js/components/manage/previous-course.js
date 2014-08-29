@@ -5,8 +5,6 @@ var CourseActions = require('../../actions/course-actions');
 var StoreWatchMixin = require('../../mixins/store-watch');
 var Link = require('react-router-component').Link;
 
-var CourseOverview = require('../course/course-overview');
-
 function course(component) {
   var id = component.props.course.id;
 
@@ -18,6 +16,7 @@ var PreviousCourse = React.createClass({
 
   handleEdit: function(e) {
     var id = this.state.course.id;
+    // if you must reference an actual DOM node this is how you do it
     var newTitle = this.refs.title.getDOMNode().innerHTML;
 
     CourseActions.updateCourseTitle(newTitle, id);

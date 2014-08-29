@@ -20732,7 +20732,6 @@ var CourseActions = {
   },
 
   updateCourseTitle: function(title, id) {
-    console.log(title, id);
     CourseDispatcher.handleViewAction({
       actionType: CourseConstants.COURSE_UPDATE_TITLE,
       title: title,
@@ -20758,6 +20757,7 @@ var Location = Router.Location;
  * This file handles constructing the overall layout of the app
  * and hooking up routers. This app has two routers:
  * 1. controlling the active view of the manage sidebar
+ * 		- note that currently manage sidebar only have one view to worry about
  * 2. controlling the active view of the content area
  *
  * As the number of URLs grow this component would likely get
@@ -20813,6 +20813,11 @@ var CourseStore = require('../../stores/course-store');
 var CourseActions = require('../../actions/course-actions');
 var StoreWatchMixin = require('../../mixins/store-watch');
 
+/**
+ * Retrieve course data from store
+ * @param {object} component Used so the mixin can use cb(this)
+ * @param {[type]} id        Optional param used if manually setting state
+ */
 function getCourse(component, id) {
   // id is passed in if the component calls this to manually update state
   var course = (id) ?
@@ -20996,8 +21001,6 @@ var CourseActions = require('../../actions/course-actions');
 var StoreWatchMixin = require('../../mixins/store-watch');
 var Link = require('react-router-component').Link;
 
-var CourseOverview = require('../course/course-overview');
-
 function course(component) {
   var id = component.props.course.id;
 
@@ -21009,6 +21012,7 @@ var PreviousCourse = React.createClass({displayName: 'PreviousCourse',
 
   handleEdit: function(e) {
     var id = this.state.course.id;
+    // if you must reference an actual DOM node this is how you do it
     var newTitle = this.refs.title.getDOMNode().innerHTML;
 
     CourseActions.updateCourseTitle(newTitle, id);
@@ -21042,7 +21046,7 @@ var PreviousCourse = React.createClass({displayName: 'PreviousCourse',
 
 module.exports = PreviousCourse;
 
-},{"../../actions/course-actions":175,"../../mixins/store-watch":187,"../../stores/course-store":188,"../course/course-overview":177,"react":174,"react-router-component":15}],183:[function(require,module,exports){
+},{"../../actions/course-actions":175,"../../mixins/store-watch":187,"../../stores/course-store":188,"react":174,"react-router-component":15}],183:[function(require,module,exports){
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
@@ -21192,6 +21196,9 @@ for (var i = 1; i < 10; i++) {
  */
 var _courseHistory = [];
 
+/**
+ * Retrieve a particular course by id
+ */
 function _getCourse(id) {
   for (var i = 0; i < _courses.length; i++) {
     if (_courses[i].id === id) {

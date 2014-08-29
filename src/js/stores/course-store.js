@@ -28,6 +28,9 @@ for (var i = 1; i < 10; i++) {
  */
 var _courseHistory = [];
 
+/**
+ * Retrieve a particular course by id
+ */
 function _getCourse(id) {
   for (var i = 0; i < _courses.length; i++) {
     if (_courses[i].id === id) {
