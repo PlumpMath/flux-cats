@@ -7,7 +7,7 @@ var StoreWatchMixin = require('../../mixins/store-watch');
 /**
  * Retrieve course data from store
  * @param {object} component Used so the mixin can use cb(this)
- * @param {[type]} id        Optional param used if manually setting state
+ * @param {string} id        Optional param used if manually setting state
  */
 function getCourse(component, id) {
   // id is passed in if the component calls this to manually update state
