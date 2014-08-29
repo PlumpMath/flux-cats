@@ -29,15 +29,18 @@ var PreviousCourse = React.createClass({
   },
 
   render: function() {
+    // attach active classname if prop active?
+    var classNames = (this.props.active) ? 'course-btn active' : 'course-btn';
+
     return (
       <div className="course course-history">
-        <Link className="course-btn" href={"/course/" + this.state.course.id}>
+        <Link className={classNames} href={"/course/" + this.state.course.id}>
           <p
             ref="title"
             contentEditable="true"
             onBlur={this.handleEdit}
             onClick={this.handleClick}
-            className="editable">
+            className='edtitable'>
             {this.state.course.title}
           </p>
         </Link>

@@ -19,7 +19,7 @@
   text-decoration: none;
   margin-bottom: 20px;
 }
-.course-btn:hover {
+.course-btn:hover, .course-btn.active {
   border: 1px solid #555;
   transition: border-color 0.5s;
 }
